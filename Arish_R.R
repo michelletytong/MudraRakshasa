@@ -48,9 +48,28 @@ View(arishELISA)
 
 # For linear mixed effects models on the Open Field Data with F and p-values
 
-Mixopenfield1 = lmer(value ~ Condition * variable + (1|Mouse), 
+Mixopenfield = lmer(value ~ Condition * variable + (1|Mouse), 
                     data=arishopenfield,
                     REML = FALSE)
+Mixopenfield
+
+Mixopenfield2 = lmer(value ~ Condition * variable - Condition + (1|Mouse),
+                     data = arishopenfield,
+                     REML = FALSE)
+
+anova(Mixopenfield,Mixopenfield2)
+
+Mixopenfield3 = lmer(value ~ Condition * variable - variable + (1|Mouse),
+                     data = arishopenfield,
+                     REML = FALSE)
+
+anova(Mixopenfield,Mixopenfield3)
+
+Mixopenfield4 = lmer(value ~ Condition * variable - Condition * variable + (1|Mouse),
+                     data = arishopenfield,
+                     REML = FALSE)
+
+anova(Mixopenfield,Mixopenfield4)
 
 aov_openfield1 = anova(Mixopenfield)
 aov_openfield1
@@ -59,6 +78,7 @@ aov_openfield1
 MixELISA = lmer(value ~ Condition * variable + (1|Mouse), 
                 data=arishELISA,
                 REML = FALSE)
+MixELISA
 
 aov_MixELISA = anova(MixELISA)
 aov_MixELISA
@@ -67,10 +87,12 @@ aov_MixELISA
 MixCBC = lmer(value ~ Condition * variable + (1|Mouse), 
                     data=arishCBC,
                     REML = FALSE)
+MixCBC
 
 aov_MixCBC = anova(MixCBC)
 aov_MixCBC
 
+?anova
 
 #Using t tests to run the post-hoc comparisons since we only have two levels per group. 
 #will need to do multiple comparison. Perform this on "arish" and not the long-form

@@ -49,6 +49,15 @@ Correlation of Fixed Effects:
 CndtnSngl-H -0.707              
 vrblPst_O_T -0.427  0.302       
 CnS-H:P_O_T  0.302 -0.427 -0.707
+
+> aov_openfield1
+Analysis of Variance Table
+                   Df  Sum Sq Mean Sq  F value
+Condition           1   20.83   20.83   3.9413
+variable            1 1044.00 1044.00 197.4952
+Condition:variable  1   71.07   71.07  13.4441
+
+
 > 
 > MixCBC = lmer(value ~ Condition * variable + (1|Mouse), 
 +                     data=arishCBC,
@@ -101,6 +110,16 @@ Correlation of Fixed Effects:
 CndtnSngl-H -0.707              
 vrblP_CBC_C -0.645  0.456       
 CS-H:P_CBC_  0.456 -0.645 -0.707
+
+> aov_MixCBC
+Analysis of Variance Table
+                   Df Sum Sq Mean Sq  F value
+Condition           1 1763.7  1763.7  69.8482
+variable            1 6275.7  6275.7 248.5398
+Condition:variable  1  241.3   241.3   9.5572
+
+
+
 > 
 > MixELISA = lmer(value ~ Condition * variable + (1|Mouse), 
 +                 data=arishELISA,
@@ -151,3 +170,68 @@ vrblP_ELISA -0.707  0.500
 CS-H:P_ELIS  0.500 -0.707 -0.707
 convergence code: 0
 boundary (singular) fit: see ?isSingular
+
+> Mixopenfield1 = lmer(value ~ Condition * variable + (1|Mouse), 
++                     data=arishopenfield,
++                     REML = FALSE)
+> Mixopenfield1
+Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: value ~ Condition * variable + (1 | Mouse)
+   Data: arishopenfield
+      AIC       BIC    logLik  deviance  df.resid 
+ 327.2354  339.8015 -157.6177  315.2354        54 
+Random effects:
+ Groups   Name        Std.Dev.
+ Mouse    (Intercept) 3.037   
+ Residual             2.299   
+Number of obs: 60, groups:  Mouse, 30
+Fixed Effects:
+                                  (Intercept)  
+                                      26.4540  
+                       ConditionSingly-Housed  
+                                      -0.3207  
+                       variablePost_Open_Time  
+                                      -6.1660  
+ConditionSingly-Housed:variablePost_Open_Time  
+                                      -4.3533  
+> 
+> aov_openfield1 = anova(Mixopenfield)
+Error in anova(Mixopenfield) : object 'Mixopenfield' not found
+> aov_openfield1
+Error: object 'aov_openfield1' not found
+> 
+> # For linear mixed effects models on the ELISA with F and p-values
+> MixELISA = lmer(value ~ Condition * variable + (1|Mouse), 
++                 data=arishELISA,
++                 REML = FALSE)
+boundary (singular) fit: see ?isSingular
+> MixELISA
+Linear mixed model fit by maximum likelihood  ['lmerMod']
+Formula: value ~ Condition * variable + (1 | Mouse)
+   Data: arishELISA
+     AIC      BIC   logLik deviance df.resid 
+155.6373 165.7705 -71.8186 143.6373       34 
+Random effects:
+ Groups   Name        Std.Dev.
+ Mouse    (Intercept) 0.000   
+ Residual             1.457   
+Number of obs: 40, groups:  Mouse, 20
+Fixed Effects:
+                              (Intercept)  
+                                    3.188  
+                   ConditionSingly-Housed  
+                                    1.192  
+                       variablePost_ELISA  
+                                    5.256  
+ConditionSingly-Housed:variablePost_ELISA  
+                                   -0.772  
+convergence code 0; 1 optimizer warnings; 0 lme4 warnings 
+> 
+
+> aov_MixELISA = anova(MixELISA)
+> aov_MixELISA
+Analysis of Variance Table
+                   Df  Sum Sq Mean Sq  F value
+Condition           1   6.496   6.496   3.0593
+variable            1 237.169 237.169 111.6890
+Condition:variable  1   1.490   1.490   0.7017
