@@ -5,7 +5,7 @@ install.packages("gridExtra")
 install.packages("reshape2")
 install.packages("dplyr")
 install.packages("RColorBrewer")
-install.packages("lme4")
+install.packages("lmerTest")
 install.packages("car")
 install.packages("MASS")
 install.packages("rmarkdown")
@@ -17,8 +17,6 @@ library(reshape2)
 library(dplyr)
 library(RColorBrewer)
 library(foreign)
-library(nlme)
-library(lme4)
 library(lmerTest)
 library(car)
 library(MASS)
@@ -31,6 +29,7 @@ setwd("~/Dropbox/Arish_SeniorResearch_Fall2018/Data_Results/MTTanalysis")
 arish = read.spss("DataAnalysis.sav", to.data.frame=TRUE)
 View(arish)
 write.table(arish,"DataAnalysis.txt")
+head(arish)
 
 #These functions below are creating three separate files for each of the dependent
   #measures and the melt allows me to create long-form dataframes so that it's 
@@ -51,28 +50,7 @@ View(arishELISA)
 Mixopenfield = lmer(value ~ Condition * variable + (1|Mouse), 
                     data=arishopenfield,
                     REML = FALSE)
-Mixopenfield
-
-Mixopenfield2 = lmer(value ~ Condition * variable - Condition + (1|Mouse),
-                     data = arishopenfield,
-                     REML = FALSE)
-
-anova(Mixopenfield,Mixopenfield2)
-
-Mixopenfield3 = lmer(value ~ Condition * variable - variable + (1|Mouse),
-                     data = arishopenfield,
-                     REML = FALSE)
-
-anova(Mixopenfield,Mixopenfield3)
-
-Mixopenfield4 = lmer(value ~ Condition * variable - Condition * variable + (1|Mouse),
-                     data = arishopenfield,
-                     REML = FALSE)
-
-anova(Mixopenfield,Mixopenfield4)
-
-aov_openfield1 = anova(Mixopenfield)
-aov_openfield1
+anova(Mixopenfield)
 
 # For linear mixed effects models on the ELISA with F and p-values
 MixELISA = lmer(value ~ Condition * variable + (1|Mouse), 
@@ -92,7 +70,6 @@ MixCBC
 aov_MixCBC = anova(MixCBC)
 aov_MixCBC
 
-?anova
 
 #Using t tests to run the post-hoc comparisons since we only have two levels per group. 
 #will need to do multiple comparison. Perform this on "arish" and not the long-form

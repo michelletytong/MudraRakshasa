@@ -1,237 +1,35 @@
- Mixopenfield = lmer(value ~ Condition * variable + (1|Mouse), 
-+                     data=arishopenfield,
-+                     REML = FALSE)
-> summary(Mixopenfield)
-Linear mixed model fit by maximum likelihood . t-tests use
-  Satterthwaite's method [lmerModLmerTest]
-Formula: value ~ Condition * variable + (1 | Mouse)
-   Data: arishopenfield
-
-     AIC      BIC   logLik deviance df.resid 
-   327.2    339.8   -157.6    315.2       54 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--1.5704 -0.6157  0.0013  0.6253  1.4845 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- Mouse    (Intercept) 9.225    3.037   
- Residual             5.286    2.299   
-Number of obs: 60, groups:  Mouse, 30
-
-Fixed effects:
-                                              Estimate
-(Intercept)                                    26.4540
-ConditionSingly-Housed                         -0.3207
-variablePost_Open_Time                         -6.1660
-ConditionSingly-Housed:variablePost_Open_Time  -4.3533
-                                              Std. Error
-(Intercept)                                       0.9836
-ConditionSingly-Housed                            1.3910
-variablePost_Open_Time                            0.8395
-ConditionSingly-Housed:variablePost_Open_Time     1.1873
-                                                   df t value
-(Intercept)                                   42.7311  26.896
-ConditionSingly-Housed                        42.7311  -0.231
-variablePost_Open_Time                        30.0000  -7.344
-ConditionSingly-Housed:variablePost_Open_Time 30.0000  -3.667
-                                              Pr(>|t|)    
-(Intercept)                                    < 2e-16 ***
-ConditionSingly-Housed                        0.818777    
-variablePost_Open_Time                        3.51e-08 ***
-ConditionSingly-Housed:variablePost_Open_Time 0.000946 ***
+> anova(Mixopenfield)
+Type III Analysis of Variance Table with Satterthwaite's method
+                    Sum Sq Mean Sq NumDF DenDF  F value    Pr(>F)    
+Condition            20.83   20.83     1    30   3.9413  0.056323 .  
+variable           1044.00 1044.00     1    30 197.4952 9.787e-15 ***
+Condition:variable   71.07   71.07     1    30  13.4441  0.000946 ***
 ---
 Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Correlation of Fixed Effects:
-            (Intr) CndS-H vP_O_T
-CndtnSngl-H -0.707              
-vrblPst_O_T -0.427  0.302       
-CnS-H:P_O_T  0.302 -0.427 -0.707
-
-> aov_openfield1
-Analysis of Variance Table
-                   Df  Sum Sq Mean Sq  F value
-Condition           1   20.83   20.83   3.9413
-variable            1 1044.00 1044.00 197.4952
-Condition:variable  1   71.07   71.07  13.4441
-
-
-> 
-> MixCBC = lmer(value ~ Condition * variable + (1|Mouse), 
-+                     data=arishCBC,
-+                     REML = FALSE)
-> summary(MixCBC)
-Linear mixed model fit by maximum likelihood . t-tests use
-  Satterthwaite's method [lmerModLmerTest]
-Formula: value ~ Condition * variable + (1 | Mouse)
-   Data: arishCBC
-
-     AIC      BIC   logLik deviance df.resid 
-   386.2    398.7   -187.1    374.2       54 
-
-Scaled residuals: 
-     Min       1Q   Median       3Q      Max 
--1.51717 -0.82801  0.03912  0.63266  2.72481 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- Mouse    (Intercept)  5.093   2.257   
- Residual             25.250   5.025   
-Number of obs: 60, groups:  Mouse, 30
-
-Fixed effects:
-                                               Estimate
-(Intercept)                                      36.499
-ConditionSingly-Housed                            8.835
-variablePost_CBC_Choice                          16.443
-ConditionSingly-Housed:variablePost_CBC_Choice    8.022
-                                               Std. Error
-(Intercept)                                         1.422
-ConditionSingly-Housed                              2.011
-variablePost_CBC_Choice                             1.835
-ConditionSingly-Housed:variablePost_CBC_Choice      2.595
-                                                   df t value
-(Intercept)                                    58.356  25.662
-ConditionSingly-Housed                         58.356   4.392
-variablePost_CBC_Choice                        30.000   8.962
-ConditionSingly-Housed:variablePost_CBC_Choice 30.000   3.091
-                                               Pr(>|t|)    
-(Intercept)                                     < 2e-16 ***
-ConditionSingly-Housed                         4.79e-05 ***
-variablePost_CBC_Choice                        5.51e-10 ***
-ConditionSingly-Housed:variablePost_CBC_Choice  0.00428 ** 
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Correlation of Fixed Effects:
-            (Intr) CndS-H vP_CBC
-CndtnSngl-H -0.707              
-vrblP_CBC_C -0.645  0.456       
-CS-H:P_CBC_  0.456 -0.645 -0.707
-
-> aov_MixCBC
-Analysis of Variance Table
-                   Df Sum Sq Mean Sq  F value
-Condition           1 1763.7  1763.7  69.8482
-variable            1 6275.7  6275.7 248.5398
-Condition:variable  1  241.3   241.3   9.5572
-
-
-
-> 
-> MixELISA = lmer(value ~ Condition * variable + (1|Mouse), 
-+                 data=arishELISA,
-+                 REML = FALSE)
-boundary (singular) fit: see ?isSingular
-> summary(MixELISA)
-Linear mixed model fit by maximum likelihood . t-tests use
-  Satterthwaite's method [lmerModLmerTest]
-Formula: value ~ Condition * variable + (1 | Mouse)
-   Data: arishELISA
-
-     AIC      BIC   logLik deviance df.resid 
-   155.6    165.8    -71.8    143.6       34 
-
-Scaled residuals: 
-    Min      1Q  Median      3Q     Max 
--2.6928 -0.5085  0.0274  0.4639  3.9363 
-
-Random effects:
- Groups   Name        Variance Std.Dev.
- Mouse    (Intercept) 0.000    0.000   
- Residual             2.123    1.457   
-Number of obs: 40, groups:  Mouse, 20
-
-Fixed effects:
-                                          Estimate Std. Error
-(Intercept)                                 3.1880     0.4608
-ConditionSingly-Housed                      1.1920     0.6517
-variablePost_ELISA                          5.2560     0.6517
-ConditionSingly-Housed:variablePost_ELISA  -0.7720     0.9216
-                                               df t value
-(Intercept)                               40.0000   6.918
-ConditionSingly-Housed                    40.0000   1.829
-variablePost_ELISA                        40.0000   8.065
-ConditionSingly-Housed:variablePost_ELISA 40.0000  -0.838
-                                          Pr(>|t|)    
-(Intercept)                               2.44e-08 ***
-ConditionSingly-Housed                      0.0748 .  
-variablePost_ELISA                        6.45e-10 ***
-ConditionSingly-Housed:variablePost_ELISA   0.4072    
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
-
-Correlation of Fixed Effects:
-            (Intr) CndS-H vP_ELI
-CndtnSngl-H -0.707              
-vrblP_ELISA -0.707  0.500       
-CS-H:P_ELIS  0.500 -0.707 -0.707
-convergence code: 0
-boundary (singular) fit: see ?isSingular
-
-> Mixopenfield1 = lmer(value ~ Condition * variable + (1|Mouse), 
-+                     data=arishopenfield,
-+                     REML = FALSE)
-> Mixopenfield1
-Linear mixed model fit by maximum likelihood  ['lmerMod']
-Formula: value ~ Condition * variable + (1 | Mouse)
-   Data: arishopenfield
-      AIC       BIC    logLik  deviance  df.resid 
- 327.2354  339.8015 -157.6177  315.2354        54 
-Random effects:
- Groups   Name        Std.Dev.
- Mouse    (Intercept) 3.037   
- Residual             2.299   
-Number of obs: 60, groups:  Mouse, 30
-Fixed Effects:
-                                  (Intercept)  
-                                      26.4540  
-                       ConditionSingly-Housed  
-                                      -0.3207  
-                       variablePost_Open_Time  
-                                      -6.1660  
-ConditionSingly-Housed:variablePost_Open_Time  
-                                      -4.3533  
-> 
-> aov_openfield1 = anova(Mixopenfield)
-Error in anova(Mixopenfield) : object 'Mixopenfield' not found
-> aov_openfield1
-Error: object 'aov_openfield1' not found
 > 
 > # For linear mixed effects models on the ELISA with F and p-values
 > MixELISA = lmer(value ~ Condition * variable + (1|Mouse), 
 +                 data=arishELISA,
 +                 REML = FALSE)
 boundary (singular) fit: see ?isSingular
-> MixELISA
-Linear mixed model fit by maximum likelihood  ['lmerMod']
-Formula: value ~ Condition * variable + (1 | Mouse)
-   Data: arishELISA
-     AIC      BIC   logLik deviance df.resid 
-155.6373 165.7705 -71.8186 143.6373       34 
-Random effects:
- Groups   Name        Std.Dev.
- Mouse    (Intercept) 0.000   
- Residual             1.457   
-Number of obs: 40, groups:  Mouse, 20
-Fixed Effects:
-                              (Intercept)  
-                                    3.188  
-                   ConditionSingly-Housed  
-                                    1.192  
-                       variablePost_ELISA  
-                                    5.256  
-ConditionSingly-Housed:variablePost_ELISA  
-                                   -0.772  
-convergence code 0; 1 optimizer warnings; 0 lme4 warnings 
+> anova(MixELISA)
+Type III Analysis of Variance Table with Satterthwaite's method
+                    Sum Sq Mean Sq NumDF DenDF  F value   Pr(>F)    
+Condition            6.496   6.496     1    40   3.0593  0.08795 .  
+variable           237.169 237.169     1    40 111.6890 3.83e-13 ***
+Condition:variable   1.490   1.490     1    40   0.7017  0.40720    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 > 
-
-> aov_MixELISA = anova(MixELISA)
-> aov_MixELISA
-Analysis of Variance Table
-                   Df  Sum Sq Mean Sq  F value
-Condition           1   6.496   6.496   3.0593
-variable            1 237.169 237.169 111.6890
-Condition:variable  1   1.490   1.490   0.7017
+> # For linear mixed effects models on the CBC with F and p-values
+> MixCBC = lmer(value ~ Condition * variable + (1|Mouse), 
++                     data=arishCBC,
++                     REML = FALSE)
+> anova(MixCBC)
+Type III Analysis of Variance Table with Satterthwaite's method
+                   Sum Sq Mean Sq NumDF DenDF  F value    Pr(>F)    
+Condition          1763.7  1763.7     1    30  69.8482 2.503e-09 ***
+variable           6275.7  6275.7     1    30 248.5398 4.639e-16 ***
+Condition:variable  241.3   241.3     1    30   9.5572  0.004276 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
