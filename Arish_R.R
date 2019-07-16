@@ -1,14 +1,21 @@
 # Following the steps of https://ase.tufts.edu/gsc/gradresources/guidetomixedmodelsinr/mixed%20model%20guide.html
+#packages for data manipulation
 install.packages("ggplot2")
-install.packages("Rmisc")
+install.packages("RColorBrewer")
 install.packages("gridExtra")
+install.packages("car")
+install.packages("Rmisc")
 install.packages("reshape2")
 install.packages("dplyr")
-install.packages("RColorBrewer")
-install.packages("lmerTest")
-install.packages("car")
 install.packages("MASS")
+
+#Packages for linear mixed effects
+install.packages("lmerTest")
+install.packages("emmeans")
+
+#R-markdown
 install.packages("rmarkdown")
+
 
 library(ggplot2)
 library(Rmisc)
@@ -21,6 +28,7 @@ library(lmerTest)
 library(car)
 library(MASS)
 library(rmarkdown)
+library(emmeans)
 
 setwd("~/Dropbox/Arish_SeniorResearch_Fall2018/Data_Results/MTTanalysis")
 
@@ -45,6 +53,7 @@ View(arishCBC)
 arishELISA = melt(arish, id.vars = c("Mouse","Condition"), measure.vars = c("Pre_ELISA", "Post_ELISA"))
 View(arishELISA)
 
+# LINEAR MIXED EFFECTS MODELS
 # For linear mixed effects models on the Open Field Data with F and p-values
 
 Mixopenfield = lmer(value ~ Condition * variable + (1|Mouse), 
@@ -56,44 +65,26 @@ anova(Mixopenfield)
 MixELISA = lmer(value ~ Condition * variable + (1|Mouse), 
                 data=arishELISA,
                 REML = FALSE)
-MixELISA
-
-aov_MixELISA = anova(MixELISA)
-aov_MixELISA
+anova(MixELISA)
 
 # For linear mixed effects models on the CBC with F and p-values
 MixCBC = lmer(value ~ Condition * variable + (1|Mouse), 
                     data=arishCBC,
                     REML = FALSE)
-MixCBC
+anova(MixCBC)
 
-aov_MixCBC = anova(MixCBC)
-aov_MixCBC
+# PAIRWISE COMPARISONS USING EMMEANS
 
+#For the open field data
+#emmeans(Mixopenfield, list(pairwise ~ Condition), adjust = "bonf")
+emmeans(Mixopenfield, list(pairwise ~ variable*Condition), adjust = "bonf")
 
-#Using t tests to run the post-hoc comparisons since we only have two levels per group. 
-#will need to do multiple comparison. Perform this on "arish" and not the long-form
-# From http://www.cookbook-r.com/Statistical_analysis/t-test/
+#For the ELISA
+emmeans(MixELISA, list(pairwise ~ variable*Condition), adjust = "tukey")
+#emmeans(MixELISA, list(pairwise ~ variable), adjust = "tukey")
 
-#What is the difference between socially and singly housed animals during pre-stress open field
-openfieldTCondition1 = t.test(Pre_Open_Time ~ Condition, arish, var.equal=TRUE)
-View(openfieldTCondition1)
-
-#What is the difference between socially and singly housed animals during post-stress open field
-openfieldTCondition2 = t.test(Post_Open_Time ~ Condition, arish, var.equal=TRUE)
-View(openfieldTCondition2)
-
-#What is the difference between pre- and post for socially housed animals?
-#First in order to look at each section separately, I need to split arish into two dataframes
-
-arishsocial = split(arish, arish$Condition)[[1]]
-View(arishsocial)
-
-arishsingle = split(arish, arish$Condition)[[2]]
-View(arishsingle)
-
-#What is the difference between pre- and post for socially housed animals?
-#openfieldTimePost = t.test(value ~ variable, arishopenfield, variable = Post_Open_Time, var.equal=TRUE)
-#View(openfieldTimePost)
+#For CBC
+emmeans(MixCBC, list(pairwise ~ variable*Condition), adjust = "tukey")
+#emmeans(MixCBC, list(pairwise ~ variable), adjust = "tukey")
 
 
