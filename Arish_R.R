@@ -8,6 +8,8 @@ install.packages("Rmisc")
 install.packages("reshape2")
 install.packages("dplyr")
 install.packages("MASS")
+install.packages("ggthemes")
+
 
 #Packages for linear mixed effects
 install.packages("lmerTest")
@@ -29,6 +31,8 @@ library(car)
 library(MASS)
 library(rmarkdown)
 library(emmeans)
+library(ggthemes)
+
 
 setwd("~/Dropbox/Arish_SeniorResearch_Fall2018/Data_Results/MTTanalysis")
 
@@ -86,4 +90,19 @@ emmeans(MixELISA, list(pairwise ~ variable*Condition), adjust = "tukey")
 emmeans(MixCBC, list(pairwise ~ variable*Condition), adjust = "tukey")
 #emmeans(MixCBC, list(pairwise ~ variable), adjust = "tukey")
 
+#Lets try to make some graphs now
 
+ggopen = ggplot(data=arishopenfield, aes(x=Condition, y=value, fill=variable)) +
+  geom_bar(stat="identity", position=position_dodge()) + 
+  labs(title = "Open Field Data",
+#       caption = "WRITE A CAPTION",
+#       tag = "Figure #",
+       x = "Housing Condition",
+       y = "Time (sec) in the center of the open field",
+       colour = "Gears") +
+  theme_bw() +
+  scale_fill_manual(name="Stress Exposure", labels = c("Pre-Stress","Post-Stress"), values=c('black','light grey'))
+
+#ggopen +  scale_fill_discrete(name = "Stress Exposure", labels = c("Pre-Stress","Post-Stress"))
+
+#ggopen + scale_fill_manual(values=c('black','light grey'))
