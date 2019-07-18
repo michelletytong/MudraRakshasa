@@ -77,7 +77,6 @@ anova(MixCBC)
 
 #For the open field data
 #emmeans(Mixopenfield, list(pairwise ~ Condition), adjust = "bonf")
-emmeans(Mixopenfield, list(pairwise ~ variable*Condition), adjust = "bonf")
 
 #For the ELISA
 emmeans(MixELISA, list(pairwise ~ variable*Condition), adjust = "tukey")

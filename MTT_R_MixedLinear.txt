@@ -80,7 +80,7 @@ $`pairwise differences of variable, Condition`
  Post_ELISA,Socially-Housed - Pre_ELISA,Singly-Housed       4.06 0.687 44.4  5.916  <.0001 
  Post_ELISA,Socially-Housed - Post_ELISA,Singly-Housed     -0.42 0.687 44.4 -0.611  0.9279 
  Pre_ELISA,Singly-Housed - Post_ELISA,Singly-Housed        -4.48 0.687 22.2 -6.528  <.0001 
-
+32.1
 P value adjustment: tukey method for comparing a family of 4 estimates 
 
 > #emmeans(MixELISA, list(pairwise ~ variable), adjust = "tukey")
@@ -105,7 +105,7 @@ $`pairwise differences of variable, Condition`
  Post_CBC_Choice,Socially-Housed - Pre_CBC_Choice,Singly-Housed       7.61 2.08 62.5   3.654
  Post_CBC_Choice,Socially-Housed - Post_CBC_Choice,Singly-Housed    -16.86 2.08 62.5  -8.096
  Pre_CBC_Choice,Singly-Housed - Post_CBC_Choice,Singly-Housed       -24.47 1.90 32.1 -12.882
- p.value
+8.44p.value
  <.0001 
  0.0004 
  <.0001 
