@@ -91,18 +91,50 @@ emmeans(MixCBC, list(pairwise ~ variable*Condition), adjust = "tukey")
 #emmeans(MixCBC, list(pairwise ~ variable), adjust = "tukey")
 
 #Lets try to make some graphs now
-
-ggopen = ggplot(data=arishopenfield, aes(x=Condition, y=value, fill=variable)) +
-  geom_bar(stat="identity", position=position_dodge()) + 
-  labs(title = "Open Field Data",
-#       caption = "WRITE A CAPTION",
-#       tag = "Figure #",
-       x = "Housing Condition",
-       y = "Time (sec) in the center of the open field",
-       colour = "Gears") +
+BarOpenField = ggplot(data=arishopenfield, aes(x=Condition, y=value, fill=variable)) +
+  geom_bar(stat="summary", fun.y="mean", position=position_dodge()) + 
+  labs(#title = "Open Field Data",
+    #       caption = "WRITE A CAPTION",
+    #       tag = "Figure #",
+    x = "Housing Condition",
+    y = "Time spent in center of field (seconds)") +
+  geom_dotplot(aes(fill = variable, color = variable), trim = FALSE,
+               binaxis='y', stackdir='center', dotsize = 0.8,
+               position = position_dodge(), show.legend = FALSE ) +
   theme_bw() +
-  scale_fill_manual(name="Stress Exposure", labels = c("Pre-Stress","Post-Stress"), values=c('black','light grey'))
+  scale_fill_manual(name="Stress Exposure", 
+                    labels = c("Pre-Stress","Post-Stress"),
+                    values=c('dark grey','light grey')) +
+  scale_color_manual(values = c("black", "black"))
 
-#ggopen +  scale_fill_discrete(name = "Stress Exposure", labels = c("Pre-Stress","Post-Stress"))
+BarCBC = ggplot(data=arishCBC, aes(x=Condition, y=value, fill=variable)) +
+  geom_bar(stat="summary", fun.y="mean", position=position_dodge()) + 
+  labs(#title = "Open Field Data",
+    #       caption = "WRITE A CAPTION",
+    #       tag = "Figure #",
+    x = "Housing Condition",
+    y = "% High-Cost/High-Benefit Decisions") +
+  geom_dotplot(aes(fill = variable, color = variable), trim = FALSE,
+               binaxis='y', stackdir='center', dotsize = 0.8,
+               position = position_dodge(), show.legend = FALSE ) +
+  theme_bw() +
+  scale_fill_manual(name="Stress Exposure", 
+                    labels = c("Pre-Stress","Post-Stress"),
+                    values=c('dark grey','light grey')) +
+  scale_color_manual(values = c("black", "black"))
 
-#ggopen + scale_fill_manual(values=c('black','light grey'))
+BarELISA = ggplot(data=arishELISA, aes(x=Condition, y=value, fill=variable)) +
+  geom_bar(stat="summary", fun.y="mean", position=position_dodge()) + 
+  labs(#title = "Open Field Data",
+    #       caption = "WRITE A CAPTION",
+    #       tag = "Figure #",
+    x = "Housing Condition",
+    y = "Mean Urine Corticosterone Concentrations (ng/mL)") +
+  geom_dotplot(aes(fill = variable, color = variable), trim = FALSE,
+               binaxis='y', stackdir='center', dotsize = 0.8,
+               position = position_dodge(), show.legend = FALSE ) +
+  theme_bw() +
+  scale_fill_manual(name="Stress Exposure", 
+                    labels = c("Pre-Stress","Post-Stress"),
+                    values=c('dark grey','light grey')) +
+  scale_color_manual(values = c("black", "black"))
