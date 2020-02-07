@@ -18,7 +18,6 @@ install.packages("emmeans")
 #R-markdown
 install.packages("rmarkdown")
 
-
 library(ggplot2)
 library(Rmisc)
 library(gridExtra)
@@ -33,17 +32,16 @@ library(rmarkdown)
 library(emmeans)
 library(ggthemes)
 
-
 setwd("~/Dropbox/Arish_SeniorResearch_Fall2018/Data_Results/MTTanalysis")
 
 #read.spss is a function that's part of the foreign package. It's allowing me
-  #convert my SPSS file into a dataframe called arish
+  #to convert my SPSS data file into a dataframe called "arish"
 arish = read.spss("DataAnalysis.sav", to.data.frame=TRUE)
 View(arish)
 write.table(arish,"DataAnalysis.txt")
 head(arish)
 
-#These functions below are creating three separate files for each of the dependent
+#These functions below are creating three separate dataframes for each of the dependent
   #measures and the melt allows me to create long-form dataframes so that it's 
     # suitable for mixed effects
 
@@ -58,20 +56,21 @@ arishELISA = melt(arish, id.vars = c("Mouse","Condition"), measure.vars = c("Pre
 View(arishELISA)
 
 # LINEAR MIXED EFFECTS MODELS
-# For linear mixed effects models on the Open Field Data with F and p-values
+# For linear mixed effects models on the Open Field Data use lmer, and then
+ # use anova to find the F and p-values.
 
 Mixopenfield = lmer(value ~ Condition * variable + (1|Mouse), 
                     data=arishopenfield,
                     REML = FALSE)
 anova(Mixopenfield)
 
-# For linear mixed effects models on the ELISA with F and p-values
+# Same as above for the ELISAs
 MixELISA = lmer(value ~ Condition * variable + (1|Mouse), 
                 data=arishELISA,
                 REML = FALSE)
 anova(MixELISA)
 
-# For linear mixed effects models on the CBC with F and p-values
+# Same as above for the CBC data
 MixCBC = lmer(value ~ Condition * variable + (1|Mouse), 
                     data=arishCBC,
                     REML = FALSE)
@@ -80,7 +79,7 @@ anova(MixCBC)
 # PAIRWISE COMPARISONS USING EMMEANS
 
 #For the open field data
-#emmeans(Mixopenfield, list(pairwise ~ Condition), adjust = "bonf")
+emmeans(Mixopenfield, list(pairwise ~ variable*Condition), adjust = "tukey")
 
 #For the ELISA
 emmeans(MixELISA, list(pairwise ~ variable*Condition), adjust = "tukey")
@@ -90,7 +89,8 @@ emmeans(MixELISA, list(pairwise ~ variable*Condition), adjust = "tukey")
 emmeans(MixCBC, list(pairwise ~ variable*Condition), adjust = "tukey")
 #emmeans(MixCBC, list(pairwise ~ variable), adjust = "tukey")
 
-#Lets try to make some graphs now
+#Lets try to make some graphs now. These will give bar graphs with a dot 
+ #representing each point overlayed on the bar.
 BarOpenField = ggplot(data=arishopenfield, aes(x=Condition, y=value, fill=variable)) +
   geom_bar(stat="summary", fun.y="mean", position=position_dodge()) + 
   labs(#title = "Open Field Data",
