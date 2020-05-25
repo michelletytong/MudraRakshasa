@@ -1,4 +1,4 @@
-A repository with data, analysis, and images files for the manuscript "Making Good Choices: Social Interaction in Mice Mitigates Chronic Stress-Induced Adaptive Changes in Decision Making" by Arish Mudra Rakshasa &amp; Michelle T. Tong (Submission planned for March, 2020)
+A repository with data, analysis, and images files for the manuscript "Making “Good” Choices: Social Isolation in Mice Exacerbates the Effects of Chronic Stress on Decision Making" by Arish Mudra Rakshasa &amp; Michelle T. Tong (https://doi.org/10.3389/fnbeh.2020.00081)
 
 ## This repository includes:
 * **Arish_R.R** contains scripts for the three linear mixed effects models and for generating each of the data figures (**ArishCBC_NoCompares.jpeg, ArishELISA_NoCompares.jpeg, and ArishOpenField_NoCompares.jpeg**)
